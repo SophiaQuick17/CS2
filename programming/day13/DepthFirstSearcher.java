@@ -7,7 +7,11 @@ public class DepthFirstSearcher<N,W> implements ISearcher<N,W>{
   public boolean pathExists(IGraph<N,W> g, INode<N> s, INode<N> e){
     graph = g;
     INode<N> cn = s;
-    IEdge<N,W>[] arrayEdgeFrom = (IEdge<N,W>[]) new Object[graph.getEdgesFrom(s).length];
+    Object[] os = graph.getEdgesFrom(s);
+    IEdge<N,W>[] arrayEdgeFrom = new IEdge[os.length];
+    for(int i=0; i<os.length; i++) {
+      arrayEdgeFrom[i]=(IEdge<N,W>)os[i];
+    }
     arrayEdgeFrom = graph.getEdgesFrom(s);
     for (int i = 0; i < arrayEdgeFrom.length; i++){
       INode<N> currentNode = arrayEdgeFrom[i].getDestination();
