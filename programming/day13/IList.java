@@ -1,7 +1,3 @@
-/**
- * List interface based on the 11/29 discussion of what a program using lists might
- * need to do. This will be our definition for the list ADT this block.
- */
 public interface IList<T> {
     /**
      * Inserts an item at a specific index in the list

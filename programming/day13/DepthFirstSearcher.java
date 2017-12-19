@@ -1,57 +1,109 @@
-public class DepthFirstSearcher<N,W> implements ISearcher<N,W>{
+public class DepthFirstSearcher<N,W>{
 
   IGraph<N,W> graph;
-  int index = 0;
-  IList<INode<N>> path = new DoubleLinkList<INode<N>>();
+  INode<N> start_node;
+  INode<N> end_node;
+  boolean nodesExist = false;
+  boolean pathExists = false;
+  LinkStack<INode> path  = new LinkStack<INode>();
+  DoubleLinkList<INode> checked  = new DoubleLinkList<INode>();
 
-  public boolean pathExists(IGraph<N,W> g, INode<N> s, INode<N> e){
+
+  public DepthFirstSearcher(IGraph<N,W> g, INode<N> s, INode<N> e){
     graph = g;
-    INode<N> cn = s;
-    Object[] os = graph.getEdgesFrom(s);
-    IEdge<N,W>[] arrayEdgeFrom = new IEdge[os.length];
-    for(int i=0; i<os.length; i++) {
-      arrayEdgeFrom[i]=(IEdge<N,W>)os[i];
-    }
-    arrayEdgeFrom = graph.getEdgesFrom(s);
-    for (int i = 0; i < arrayEdgeFrom.length; i++){
-      INode<N> currentNode = arrayEdgeFrom[i].getDestination();
-      cn = currentNode;
-      if (currentNode.equals(e)){
-        return true;
-      }
-    }
-    pathExists(graph, cn, e);
-    return false;
+    start_node = s;
+    end_node = e;
   }
 
-  public IList<INode<N>> getPath(IGraph<N,W> g, INode<N> s, INode<N> e){
-    graph = g;
-    if (pathExists(g, s, e) == false){
-      return null;
+  public boolean Exist(){
+    INode<N>[] nodes_arr = graph.getNodeSet();
+    boolean startFound = false;
+    boolean endFound = false;
+    DoubleLinkList<INode> nodes = new DoubleLinkList<INode>();
+    INode<N> current;
+    int i = 0;
+
+    for(int j = 0; j < nodes_arr.length; j++){
+      nodes.append(nodes_arr[j]);
     }
-    path.append(s);
-    IEdge<N,W>[] arrayEdgeFrom = g.getEdgesFrom(s);
-    for (int i = 0; i < arrayEdgeFrom.length; i++){
-      INode<N> currentNode = arrayEdgeFrom[i].getDestination();
-      if (currentNode.equals(e)){
-        return path;
-      }
-      else{
-        getPath(graph, currentNode, e);
+
+    if(nodes.size() == 0){
+      startFound = false;
+      endFound = false;
+    }
+    else{
+      while(i < nodes.size()){
+        current = nodes.fetch(i);
+        if(current.equals(start_node)){
+          startFound = true;
+          i++;
+        }
+        else if(current.equals(end_node)){
+          endFound = true;
+          i++;
+        }
+        else{
+          i++;
+        }
       }
     }
-    return path;
+    if(startFound == true && endFound == true){
+      nodesExist = true;
+    }
+    else{
+      nodesExist = false;
+    }
+    return nodesExist;
   }
 
-  public static void main(String[] args) {
-    DepthFirstSearcher<Integer,Integer> DFS = new DepthFirstSearcher();
-    IGraph<Integer,Integer> graph = new Graph();
-    INode<Integer> node1;
-    INode<Integer> node2;
-    node1 = graph.addNode(15);
-    node2 = graph.addNode(1);
-    graph.addEdge(node1, node2, 10);
-    IList<INode<Integer>> list = DFS.getPath(graph, node1, node2);
+  public boolean Search(INode<N> start, INode<N> end){
+    INode<N>[] neighbors_arr = graph.getNeighbors(start);
+    DoubleLinkList<INode> neighbors = new DoubleLinkList();
+    int n = 0;
+    path.push(start);
+    checked.append(start);
+
+    for(int a = 0; a < neighbors_arr.length; a++){
+      neighbors.append(neighbors_arr[a]);
+    }
+
+    if(neighbors.size() > 0 ){
+      for(int i = 0; i < neighbors_arr.length; i++){
+        if(neighbors_arr[i].equals(end)){
+          path.push(end);
+          pathExists = true;
+          break;
+        }
+      }
+      if(pathExists == false){
+        for(int j = 0; j < checked.size() - 1; j++){
+          for(int k = 0; k < neighbors.size(); k++){
+            if(checked.fetch(j).equals(neighbors.fetch(k))){
+              neighbors.remove(k);
+            }
+            else{
+            }
+          }
+        }
+        while(n < neighbors.size()){
+          Search(neighbors.fetch(n), end);
+          if(pathExists == true){
+            break;
+          }
+          else{
+            n++;
+          }
+        }
+        if(pathExists == false && n >= neighbors.size()){
+          path.pop();
+        }
+      }
+    }
+    else{
+      path.pop();
+      pathExists = false;
+    }
+    return pathExists;
   }
 
 }

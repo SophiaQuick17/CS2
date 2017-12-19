@@ -12,3 +12,4 @@ IGraphReader.java  - An interface for reading in graph files
 DiGraphReader.java - This file isn't included, please include your day11 implementation
 ISearcher.java     - An interface for classes that provide graph searches.
 graphfile.cs2      - A simple graph file for a basic test
+Searcher.java      - A program that runs my searchers, also change return statement to get breadth or depth

@@ -13,5 +13,5 @@ public interface IGraphReader {
      * @throws IOException if there are problems reading the file
      */
     public IGraph<String,Double> read(String filename) throws FileNotFoundException, IOException;
-        
+
 }

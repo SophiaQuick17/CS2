@@ -1,6 +1,3 @@
-/**
- * The interface for the link cells in a doubly linked list
- */
 public interface IDLink<T> {
     /**
      * Gets the current value for this link cell
