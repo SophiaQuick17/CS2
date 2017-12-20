@@ -1,4 +1,4 @@
-public class BreadthFirst<N,W> implements ISearcher{
+public class BreadthFirst<N,W> implements ISearcher<N,W>{
 
   IGraph<N,W> graph;
   INode<N> start_node; //initial start node

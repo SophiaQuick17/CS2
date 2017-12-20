@@ -6,7 +6,7 @@ public interface ISearcher<N,W> {
      * @param e node to end at
      * @return if a path of any length exists
      */
-    //public boolean pathExists(IGraph<N,W> g, INode<N> s, INode<N> e);
+    public boolean pathExists(IGraph<N,W> g, INode<N> s, INode<N> e);
 
     /**
      * Finds a path based on the properties of the search algorithm.
@@ -17,5 +17,5 @@ public interface ISearcher<N,W> {
      * @param e node to end at
      * @return the list of nodes in the path
      */
-    //public IList<INode<N>> getPath(IGraph<N,W> g, INode<N> s, INode<N> e);
+    public IList<INode<N>> getPath(IGraph<N,W> g, INode<N> s, INode<N> e);
 }
