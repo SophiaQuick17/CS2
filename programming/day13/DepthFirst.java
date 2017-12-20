@@ -1,4 +1,4 @@
-public class DepthFirst<N,W>{
+public class DepthFirst<N,W> implements ISearcher{
 
   IGraph<N,W> graph;
   INode<N> start_node;
@@ -7,11 +7,22 @@ public class DepthFirst<N,W>{
   boolean pathExists = false;
   Stack<INode> path  = new Stack<INode>();
   DoubleLinkList<INode> checked  = new DoubleLinkList<INode>();
+  IList<INode<N>> list = new ArrayList<INode<N>>();
 
   public DepthFirst(IGraph<N,W> g, INode<N> s, INode<N> e){
     graph = g;
     start_node = s;
     end_node = e;
+  }
+
+  public boolean pathExists(IGraph<N,W> g, INode<N> s, INode<N> e){
+    DFSearcher search = new DFSearcher();
+    return search.pathExistsDF(g,s,e);
+  }
+
+  public IList<INode<N>> getPath(IGraph<N,W> g, INode<N> s, INode<N> e){
+    DFSearcher search = new DFSearcher();
+    return search.getPathDF(g,s,e);
   }
 
   public boolean Exist(){
@@ -103,6 +114,13 @@ public class DepthFirst<N,W>{
       pathExists = false;
     }
     return pathExists;
+  }
+
+  public IList<INode<N>> Path(){
+    for (int i = 0; i < path.size(); i++){
+      list.insert(i, path.pop());
+    }
+    return list;
   }
 
 }

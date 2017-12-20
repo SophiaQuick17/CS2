@@ -1,4 +1,4 @@
-public class BreadthFirst<N,W>{
+public class BreadthFirst<N,W> implements ISearcher{
 
   IGraph<N,W> graph;
   INode<N> start_node; //initial start node
@@ -12,6 +12,16 @@ public class BreadthFirst<N,W>{
     graph = g;
     start_node = s;
     end_node = e;
+  }
+
+  public boolean pathExists(IGraph<N,W> g, INode<N> s, INode<N> e){
+    BFSearcher search = new BFSearcher();
+    return search.pathExists(g,s,e);
+  }
+
+  public IList<INode<N>> getPath(IGraph<N,W> g, INode<N> s, INode<N> e){
+    BFSearcher search = new BFSearcher();
+    return search.getPath(g,s,e);
   }
 
   public void Search(INode<N> start, INode<N> end){
